@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: add-two-numbers-deployment
+  labels:
+    app: add-two-numbers
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: add-two-numbers
+  template:
+    metadata:
+      labels:
+        app: add-two-numbers
+    spec:
+      containers:
+      - name: add-two-numbers
+        image: ECR_REGISTRY/add-two-numbers:IMAGE_TAG
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
