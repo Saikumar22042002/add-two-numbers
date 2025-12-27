@@ -1,0 +1,7 @@
+# Application Dependencies
+Flask==3.0.3
+gunicorn==22.0.0
+
+# Testing & Linting Dependencies
+pytest==8.2.2
+pylint==3.2.2
